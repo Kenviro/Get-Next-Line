@@ -5,74 +5,76 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktintim- <ktintim-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 09:58:46 by ktintim-          #+#    #+#             */
-/*   Updated: 2024/10/16 09:58:48 by ktintim-         ###   ########.fr       */
+/*   Created: 2024/10/30 10:26:26 by ktintim-          #+#    #+#             */
+/*   Updated: 2024/10/30 10:47:16 by ktintim-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
-char	*ft_join_and_free(char *text, char *buffer)
+char	*joinfree(char *ret, char *str)
 {
-	char	*temp;
+	char	*retstr;
 
-	temp = ft_strjoin(text, buffer);
-	free(text);
-	return (temp);
+	retstr = ft_strjoin(ret, str);
+	free(ret);
+	return (retstr);
 }
 
-char	*read_first_line(int fd, char *text)
+char	*firstligne(int fd, char *ret)
 {
-	char	*buffer;
-	int		bytes_read;
+	char	*str;
+	int		i;
 
-	if (!text)
-		text = ft_calloc(1, 1);
-	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
-	if (!buffer)
+	if (!ret)
+		ret = ft_calloc(1, 1);
+	str = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!str)
 		return (NULL);
-	bytes_read = 1;
-	while (!ft_strchr(text, '\n') && bytes_read != 0)
+	i = 1;
+	while (i > 0)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
+		i = read(fd, str, BUFFER_SIZE);
+		if (i == -1)
 		{
-			free (text);
-			free (buffer);
+			free(ret);
+			free(str);
 			return (NULL);
 		}
-		buffer[bytes_read] = 0;
-		text = ft_join_and_free(text, buffer);
-		if (ft_strchr(text, '\n'))
+		str[i] = 0;
+		ret = joinfree(ret, str);
+		if (ft_strchr(ret, '\n'))
 			break ;
 	}
-	free (buffer);
-	return (text);
+	free(str);
+	return (ret);
 }
 
-char	*get_line(char *text)
+char	*get_ligne(char *ret)
 {
 	int		i;
 	char	*str;
 
 	i = 0;
-	if (!text[i])
+	if (!ret[i])
 		return (NULL);
-	while (text[i] && text[i] != '\n')
+	while (ret[i] && ret[i] != '\n')
 		i++;
 	str = ft_calloc(i + 2, sizeof(char));
+	if (!str)
+		return (NULL);
 	i = 0;
-	while (text[i] && text[i] != '\n')
+	while (ret[i] && ret[i] != '\n')
 	{
-		str[i] = text[i];
+		str[i] = ret[i];
 		i++;
 	}
-	if (text[i] && text[i] == '\n')
+	if (ret[i] && ret[i] == '\n')
 		str[i++] = '\n';
 	return (str);
 }
 
-char	*clean_first_line(char *text)
+char	*free_ligne(char *ret)
 {
 	int		i;
 	int		j;
@@ -80,60 +82,34 @@ char	*clean_first_line(char *text)
 
 	i = 0;
 	j = 0;
-	while (text[i] && text[i] != '\n')
+	while (ret[i] && ret[i] != '\n')
 		i++;
-	if (!text[i])
+	if (!ret[i])
 	{
-		free (text);
+		free (ret);
 		return (NULL);
 	}
-	str = ft_calloc((ft_strlen(text) - i + 1), sizeof(*text));
+	str = ft_calloc((ft_strlen(ret) - i + 1), sizeof(*ret));
 	if (!str)
 		return (NULL);
-	while (text[++i])
-		str[j++] = text[i];
+	while (ret[++i])
+		str[j++] = ret[i];
 	str[j] = '\0';
-	free (text);
+	free (ret);
 	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*output_text;
-	static char	*text[FOPEN_MAX];
+	static char	*ret;
+	char		*str;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || fd > FOPEN_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	text[fd] = read_first_line(fd, text[fd]);
-	if (!text[fd])
+	ret = firstligne(fd, ret);
+	if (!ret)
 		return (NULL);
-	output_text = get_line(text[fd]);
-	text[fd] = clean_first_line(text[fd]);
-	return (output_text);
+	str = get_ligne(ret);
+	ret = free_ligne(ret);
+	return (str);
 }
-
-/* int main()
-{
-	int fd = open("a.txt", O_RDONLY);
-	int fdb = open("b.txt", O_RDONLY);
-	int fdc = open("c.txt", O_RDONLY);
-	char *a;
-
-	 while ((a = get_next_line(fd)))
-	{
-		printf("%s", a);
-	}  
-
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fdc));
-	printf("%s", get_next_line(fdc));
-	printf("%s", get_next_line(fdc));
-	printf("%s", get_next_line(fdb));
-	printf("%s", get_next_line(fdb));
-	printf("%s", get_next_line(fdc));
-	printf("%s", get_next_line(fdc));
-	printf("%s", get_next_line(fd));
-
-	return 0; 
-}  */

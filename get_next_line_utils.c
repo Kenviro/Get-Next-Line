@@ -5,19 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktintim- <ktintim-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 13:33:16 by ktintim-          #+#    #+#             */
-/*   Updated: 2024/10/16 09:56:22 by ktintim-         ###   ########.fr       */
+/*   Created: 2024/10/30 10:26:18 by ktintim-          #+#    #+#             */
+/*   Updated: 2024/10/30 10:26:22 by ktintim-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *s)
+int	ft_strlen(const char *str)
 {
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (str[i])
 		i++;
 	return (i);
 }
@@ -38,7 +38,7 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*start;
+	char	*strmieux;
 	char	*str;
 
 	if (!s1 || !s2)
@@ -46,13 +46,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	start = str;
+	strmieux = str;
 	while (*s1)
 		*str++ = *s1++;
 	while (*s2)
 		*str++ = *s2++;
 	*str = '\0';
-	return (start);
+	return (strmieux);
 }
 
 void	ft_bzero(void *s, unsigned int n)
@@ -64,13 +64,13 @@ void	ft_bzero(void *s, unsigned int n)
 		*p++ = '\0';
 }
 
-void	*ft_calloc(unsigned int count, unsigned int size)
+void	*ft_calloc(unsigned int nbr, unsigned int size)
 {
-	void	*pointer;
+	void	*ret;
 
-	pointer = malloc(count * size);
-	if (!pointer)
+	ret = malloc(nbr * size);
+	if (!ret)
 		return (NULL);
-	ft_bzero(pointer, size * count);
-	return (pointer);
+	ft_bzero(ret, nbr * size);
+	return (ret);
 }

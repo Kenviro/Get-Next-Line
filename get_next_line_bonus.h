@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktintim- <ktintim-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 09:58:50 by ktintim-          #+#    #+#             */
-/*   Updated: 2024/10/16 09:58:53 by ktintim-         ###   ########.fr       */
+/*   Created: 2024/10/30 10:26:31 by ktintim-          #+#    #+#             */
+/*   Updated: 2024/10/30 10:48:28 by ktintim-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-char	*get_next_line(int fd);
+void	*ft_calloc(unsigned int nbr, unsigned int size);
+void	ft_bzero(void *s, unsigned int n);
+
+int		ft_strlen(const char *str);
+
 char	*ft_strjoin(char *s1, char *s2);
-int		ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
-char	*read_first_line(int fd, char *text);
-char	*get_line(char *text);
-char	*clean_first_line(char *text);
-int		ft_get_index_of(char *s1, char *s2);
-char	*ft_itoa(int n);
-void	*ft_calloc(unsigned int count, unsigned int size);
+char	*joinfree(char *str, char *ret);
+char	*firstline(int fd, char *ret);
+char	*get_ligne(char *ret);
+char	*free_ligne(char *ret);
+char	*get_next_line(int fd);
+
 #endif

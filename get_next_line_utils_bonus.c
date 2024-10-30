@@ -5,19 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktintim- <ktintim-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/16 09:59:00 by ktintim-          #+#    #+#             */
-/*   Updated: 2024/10/16 09:59:02 by ktintim-         ###   ########.fr       */
+/*   Created: 2024/10/30 10:26:18 by ktintim-          #+#    #+#             */
+/*   Updated: 2024/10/30 10:47:09 by ktintim-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
-int	ft_strlen(const char *s)
+int	ft_strlen(const char *str)
 {
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (str[i])
 		i++;
 	return (i);
 }
@@ -38,61 +38,39 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*start;
+	char	*strmieux;
 	char	*str;
 
-	if (!s1)
+	if (!s1 || !s2)
 		return (NULL);
 	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
-	start = str;
+	strmieux = str;
 	while (*s1)
 		*str++ = *s1++;
 	while (*s2)
 		*str++ = *s2++;
 	*str = '\0';
-	return (start);
+	return (strmieux);
 }
 
-void	*ft_calloc(unsigned int count, unsigned int size)
+void	ft_bzero(void *s, unsigned int n)
 {
-	void			*pointer;
 	unsigned char	*p;
-	unsigned int	n;
 
-	pointer = malloc(count * size);
-	if (!pointer)
-		return (NULL);
-	p = pointer;
-	n = size * count;
+	p = s;
 	while (n--)
 		*p++ = '\0';
-	return (pointer);
 }
 
-char	*ft_itoa(int n)
+void	*ft_calloc(unsigned int nbr, unsigned int size)
 {
-	char		*str;
-	int			i;
-	long int	nb;
+	void	*ret;
 
-	nb = n;
-	i = 0;
-	while (nb > 0)
-	{
-		nb /= 10;
-		i++;
-	}
-	nb = n;
-	str = ft_calloc(i + 1, sizeof(char));
-	if (!str)
-		return (0);
-	str[i--] = 0;
-	while (nb > 0)
-	{
-		str[i--] = nb % 10 + '0';
-		nb /= 10;
-	}
-	return (str);
+	ret = malloc(nbr * size);
+	if (!ret)
+		return (NULL);
+	ft_bzero(ret, nbr * size);
+	return (ret);
 }

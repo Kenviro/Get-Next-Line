@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ktintim- <ktintim-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/15 13:33:27 by ktintim-          #+#    #+#             */
-/*   Updated: 2024/10/16 09:56:00 by ktintim-         ###   ########.fr       */
+/*   Created: 2024/10/30 10:26:31 by ktintim-          #+#    #+#             */
+/*   Updated: 2024/10/30 10:26:33 by ktintim-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef  GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define  BUFFER_SIZE 1234
+#  define BUFFER_SIZE 1234
 # endif
 
 # include <unistd.h>
@@ -22,13 +22,17 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-char	*get_next_line(int fd);
+void	*ft_calloc(unsigned int nbr, unsigned int size);
+void	ft_bzero(void *s, unsigned int n);
+
+int		ft_strlen(const char *str);
+
 char	*ft_strjoin(char *s1, char *s2);
-int		ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
-char	*read_first_line(int fd, char *text);
-char	*get_line(char *text);
-char	*clean_first_line(char *text);
-void	*ft_calloc(unsigned int count, unsigned int size);
+char	*joinfree(char *str, char *ret);
+char	*firstline(int fd, char *ret);
+char	*get_ligne(char *ret);
+char	*free_ligne(char *ret);
+char	*get_next_line(int fd);
 
 #endif
